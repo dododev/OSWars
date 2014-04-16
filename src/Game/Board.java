@@ -9,8 +9,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -51,10 +49,14 @@ public class Board extends JPanel {
         setBackground(Color.black);
     }
 
-    // Paints all of the components of the game into the Swing Panel
+    /*
+     * Paints all of the components of the game 
+     * into the Swing Panel
+     */ 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        getImages();
         initializeMap(g);
     }
     
@@ -91,18 +93,22 @@ public class Board extends JPanel {
                     g2d.fillRect(x + 11, y + 11, 10, 10);
                 }
             }
-        } 
+        }
+        g2d.drawImage(windows, 200, 200, this);
+        g2d.drawImage(android, 100 , 100, this);
+        g2d.drawImage(apple, null, this);
         g2d.dispose();
     }
     
     /*
      * Loads the images necessary for gameplay
      */
-    public void GetImages(){
+    public void getImages(){
         try {
             windows = ImageIO.read(new File("images/windows.png"));
             apple = ImageIO.read(new File("images/apple.png"));
             android = ImageIO.read(new File("images/android.png"));
+            
         } catch (IOException ex) {
             ex.getMessage();
         }
