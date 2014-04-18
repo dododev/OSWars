@@ -6,14 +6,16 @@
 
 package Game;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -27,6 +29,7 @@ public class Board extends JPanel {
     private final int BLOCK_SIZE = 40; //tile size
     private final int NUM_BLOCKS = 15; //width
     private final int TOTAL_SCREEN_SIZE = NUM_BLOCKS * BLOCK_SIZE;
+    private final String soundByte = "droid.wav";
     private final short objectPlacement[][] = {
         {19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22},
         {17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20},
@@ -56,11 +59,27 @@ public class Board extends JPanel {
      */ 
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        getImages();
-        initializeMap(g);
+        try{
+            playIntroSound();
+            super.paintComponent(g);
+            getImages();
+            initializeMap(g);
+        }catch(Exception ex){
+            ex.getStackTrace();
+            ex.getMessage();
+        }
     }
     
+    public void playIntroSound(){
+        try{
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sounds/droid.wav").getAbsoluteFile());
+            Clip soundByte = AudioSystem.getClip();
+            soundByte.open(ais);
+            soundByte.start();
+        }catch(UnsupportedAudioFileException | IOException | LineUnavailableException ex){
+            System.out.println("Error playing intro sound.");
+        }
+    }
     /*
      * Draws the level along with the eatables
      */
@@ -95,7 +114,8 @@ public class Board extends JPanel {
                 }
             }
         }
-        g2d.drawImage(windows, 200,  200, this);
+        //arbitrary starting positions
+        g2d.drawImage(windows, 200,  200, this); 
         g2d.drawImage(android, 100 , 100, this);
         g2d.drawImage(apple  , 50  ,  50, this);
         g2d.dispose();
