@@ -1,9 +1,10 @@
-
-package Game;
 /**
   * @author Kyle Holcomb & Luis Poza
   * @version 1.0
   */
+
+package Game;
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 

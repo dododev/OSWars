@@ -3,6 +3,7 @@
   * @author Kyle Holcomb & Luis Poza
   * @version 1.0
   */
+
 package Game;
 
 import java.awt.BasicStroke;
@@ -94,9 +95,9 @@ public class Board extends JPanel {
                 }
             }
         }
-        g2d.drawImage(windows, 200, 200, this);
+        g2d.drawImage(windows, 200,  200, this);
         g2d.drawImage(android, 100 , 100, this);
-        g2d.drawImage(apple, null, this);
+        g2d.drawImage(apple  , 50  ,  50, this);
         g2d.dispose();
     }
     
@@ -105,9 +106,9 @@ public class Board extends JPanel {
      */
     public void getImages(){
         try {
-            windows = ImageIO.read(new File("images/windows.png"));
-            apple = ImageIO.read(new File("images/apple.png"));
-            android = ImageIO.read(new File("images/android.png"));
+            windows = ImageIO.read(new File("Images/rsz_Windows.png"));
+            apple = ImageIO.read(new File("Images/rsz_Apple.png"));
+            android = ImageIO.read(new File("Images/rsz_Android.png"));
             
         } catch (IOException ex) {
             ex.getMessage();
