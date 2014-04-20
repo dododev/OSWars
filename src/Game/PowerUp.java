@@ -9,6 +9,9 @@ package Game;
 public class PowerUp extends Eatable {
     int type; // 1 = speed 2 = invincibility
     
+    public PowerUp(){
+        super(1,1);
+    }
     
     
 }

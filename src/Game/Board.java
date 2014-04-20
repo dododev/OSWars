@@ -126,16 +126,11 @@ public class Board extends JPanel {
                             y + BLOCK_SIZE - 1);
                 }
                 if ((level2[y/BLOCK_SIZE][x/BLOCK_SIZE] & 16) != 0) { 
-                    //g2d.setColor(APPLE_COLOR); // swap for apple logo
-                    //g2d.fillRect(x + 11, y + 11, 10, 10);
-                    g2d.drawImage(apple,x+10,y+10,this);
+                    Eatable apple = new Eatable(x+10,y+10);
+                    g2d.drawImage(apple.icon,apple.xpos,apple.ypos,this);
                 }
             }
         }
-        
-        // arbitrary starting positions
-        g2d.drawImage(windows, 100 , 200, this); 
-        g2d.drawImage(android, 100 , 100, this);
         g2d.dispose();
     }
     
@@ -145,5 +140,10 @@ public class Board extends JPanel {
     
     public void loadCharacters(){
         Android android = new Android();
+        
+    }
+    
+    public void loadEatables(){
+        
     }
 } // end class

@@ -6,10 +6,17 @@
 
 package Game;
 
+import java.awt.image.BufferedImage;
+
 public class Eatable {
     boolean available; // has it been consumed yet?
     int xpos, ypos; 
+    BufferedImage icon;
     
+    public Eatable(int xpos, int ypos){
+        this.xpos = xpos;
+        this.ypos = ypos;
+    }
     
     public void setPosition(){
         
