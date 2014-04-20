@@ -1,4 +1,5 @@
 /**
+  * Runnable which begins the game
   * @author Kyle Holcomb & Luis Poza
   * @version 1.2
   */
@@ -21,7 +22,7 @@ public class Main extends JFrame {
         add(new Board());
         setTitle("OS WARS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(650,620);
+        setSize(800,700);
         setResizable(true);
         setLocationRelativeTo(null);
         setVisible(true);  
@@ -29,6 +30,7 @@ public class Main extends JFrame {
 
     public static void main(String[] args) throws InterruptedException {
         SplashScreen splash = new SplashScreen();
+        Controller c = new Controller();
         splash.setVisible(true);
         Thread t = Thread.currentThread();
         playIntroSound();
@@ -42,7 +44,7 @@ public class Main extends JFrame {
             }
         });
     }
-        
+    
     public static void playIntroSound(){
         try{
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sounds/droid.wav").getAbsoluteFile());

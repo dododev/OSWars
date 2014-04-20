@@ -20,6 +20,7 @@ public class Eatable {
         this.icon = icon;
         this.xpos = xpos;
         this.ypos = ypos;
+        available = true;
     }
     
     public boolean checkAvailability(){

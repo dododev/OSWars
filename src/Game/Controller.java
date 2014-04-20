@@ -9,23 +9,27 @@ package Game;
 import java.awt.event.KeyEvent;
 
 public class Controller {
-    
     public void onKeyPress(KeyEvent ke) {
         // Arrow keys and WASD keys move the paddle
         int keyCode = ke.getKeyCode();
         switch(keyCode){
             case KeyEvent.VK_UP:
-                
-                //handle up
+                Board.android.moveUp();
                 break;
             case KeyEvent.VK_DOWN:
-                //handle down
+                Board.android.moveDown();
                 break;
             case KeyEvent.VK_LEFT:
-                //handle left
+                Board.android.moveLeft();
                 break;
             case KeyEvent.VK_RIGHT:
-                //handle right
+                Board.android.moveRight();
+                break;
+            case KeyEvent.VK_P:
+                //pause
+                break;
+            case KeyEvent.VK_ESCAPE:
+                System.exit(0);
                 break;
         }
     }

@@ -2,15 +2,12 @@
  * Creates characters and maintains 
  * their positions within the game board
  * @author Kyle Holcomb & Luis Poza
- * @version 1.0
+ * @version 1.1
  */
 
 package Game;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Character {
     public int xpos, ypos, dx, dy;
@@ -24,7 +21,13 @@ public class Character {
         this.name = newName;
     }
     
-    // changes the characters position
+    /** 
+     * Changes the characters position
+     * @param change The amount of change in 2D space with 
+     * which to move the character
+     * @param direction The direction in which to 
+     * change the players location
+     */
     private void changePosition(int change, int direction){
         if(direction == 1)
             this.xpos -= change;

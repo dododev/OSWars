@@ -10,13 +10,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Android extends Character{
-    private int score;
-    protected int numLives = 3;
+    public int score;
+    public int numLives = 3;
     
     public Android(){
         super();
         setImage();
-        setPrimaryPosition();
+        setInitialPosition();
     }
     
     private void setImage(){
@@ -27,7 +27,7 @@ public class Android extends Character{
         }
     }
     
-    private void setPrimaryPosition(){
+    private void setInitialPosition(){
         this.xpos = 10;
         this.ypos = 10;
     }
@@ -38,6 +38,22 @@ public class Android extends Character{
     
     public int getScore(){
         return score;
+    }
+    
+    public void moveUp(){
+        this.ypos += 10;
+    }
+    
+    public void moveDown(){
+        this.ypos -= 10;
+    }
+    
+    public void moveLeft(){
+        this.xpos -= 10;
+    }
+    
+    public void moveRight(){
+        this.xpos += 10;
     }
     
 }
