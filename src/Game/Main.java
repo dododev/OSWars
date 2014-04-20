@@ -16,7 +16,8 @@ public class Main extends JFrame {
         add(new Board());
         setTitle("OS WARS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600, 650);
+        setSize(600, 625);
+        setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);  
     }
