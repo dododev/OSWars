@@ -8,10 +8,14 @@ package Game;
 
 public class PowerUp extends Eatable {
     int type; // 1 = speed 2 = invincibility
-    
+   
     public PowerUp(){
-        super(1,1);
+        super();
     }
     
+    private void move(){
+        if (type == 1)
+            this.xpos +=1; // some powerups move randomly around the map
+    }
     
 }

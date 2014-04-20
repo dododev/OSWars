@@ -17,6 +17,9 @@ public class Character {
     private  String name;
     BufferedImage icon;
     
+    public Character(){
+    }
+    
     private void setName(String newName){
         this.name = newName;
     }

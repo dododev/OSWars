@@ -13,15 +13,14 @@ public class Eatable {
     int xpos, ypos; 
     BufferedImage icon;
     
-    public Eatable(int xpos, int ypos){
+    public Eatable(){
+    }
+    
+    public Eatable(BufferedImage icon, int xpos, int ypos){
+        this.icon = icon;
         this.xpos = xpos;
         this.ypos = ypos;
     }
-    
-    public void setPosition(){
-        
-    }
-    
     
     public boolean checkAvailability(){
         return this.available;

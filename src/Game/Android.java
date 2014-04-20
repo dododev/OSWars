@@ -5,20 +5,21 @@
 
 package Game;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Android extends Character{
     private int score;
+    protected int numLives = 3;
     
-    public void Android(){
-        //super();
+    public Android(){
+        super();
         setImage();
+        setPrimaryPosition();
     }
     
-    public void setImage(){
+    private void setImage(){
         try {
             icon = ImageIO.read(new File("Images/rsz_Android.png"));
         } catch (IOException ex) {
@@ -26,8 +27,13 @@ public class Android extends Character{
         }
     }
     
-    public void changeScore(){
-        this.score += 100;
+    private void setPrimaryPosition(){
+        this.xpos = 10;
+        this.ypos = 10;
+    }
+    
+    public void changeScore(int difference){
+        this.score += difference;
     }
     
     public int getScore(){
