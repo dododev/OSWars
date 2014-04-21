@@ -40,7 +40,6 @@ public class Android extends Character{
     	return numLives;
     }
     
-    
     /**
      * If the android died, it decrements the number of lives
      */

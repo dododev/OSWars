@@ -46,4 +46,23 @@ public class Character {
     private void setIcon(BufferedImage newIcon){
         this.icon = newIcon;
     }
+    
+    // Checks to verify that character is within the board
+    public void checkPosition(){
+        if(this.xpos > 600 || this.ypos > 600  || this.xpos < 0 || this.ypos < 0){
+            if (this.xpos > 600){
+                this.xpos -=10;
+            }
+            if (this.ypos > 600){
+                this.ypos -=10;
+            }
+            if (this.xpos < 0){
+                this.xpos +=10;
+            }
+            if (this.ypos < 0){
+                this.ypos +=10;
+            }
+        }
+    
+    }
 }

@@ -1,7 +1,7 @@
 /**
   * Board creation
   * @author Kyle Holcomb & Luis Poza
-  * @version 1.2
+  * @version 1.3
   */
 
 package Game;
@@ -17,29 +17,33 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
-    
-    private BufferedImage ICON;
+    //Icons
+    private BufferedImage icon;
     private BufferedImage lives;
+    
+    //Graphics
+    private Graphics2D g2d;
     private Image ii;
     
+    //Characters
     protected static Android android;
     protected static Windows window1;
     protected static Windows window2;
     protected static Eatable apple;
-    private int reqdx, reqdy, viewdx, viewdy; // ?
     
+    //GameBoard Properties
     private final Color WALL_COLOR = new Color(164, 199, 57); // Android Green
     private final BasicStroke WALL_THICKNESS = new BasicStroke(5);
     private final int BLOCK_SIZE = 40; //individual tile size
     private final int NUM_BLOCKS = 15; //width
     private final int TOTAL_SCREEN_SIZE = NUM_BLOCKS * BLOCK_SIZE;
-    private Graphics2D g2d;
     
-     /* Corresponding wall locations and eatable
-     * 	     2
-     *   1  16   4
-     *       8 
-     * */
+     /* 
+      * Corresponding wall locations and eatable
+      *       2
+      *   1  16   4
+      *       8 
+      */
     private final short level1[][] = {
         {19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22},
         {17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20},
@@ -75,7 +79,7 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g) {
     	super.paintComponent(g);
     	initializeMap(g);
-    	playGame(g,window1);
+    	drawCharacters(g);
         doDrawings(g);
     }
     
@@ -83,16 +87,11 @@ public class Board extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLACK);
         initializeMap(g2d);
-        drawAndroid(g2d);
-        drawWindows(g2d,window1);
-        drawWindows(g2d,window2);
-        
+        drawCharacters(g2d);
         g2d.drawImage(ii, 5, 5, this);
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
     }
-    
-    
     
     /**
      * Draws the level along with the eatables
@@ -125,23 +124,22 @@ public class Board extends JPanel {
                             y + BLOCK_SIZE - 1);
                 }
                 if ((level1[y/BLOCK_SIZE][x/BLOCK_SIZE] & 16) != 0) { 
-                    Eatable apple = new Eatable(ICON,x+10,y+10);
+                    Eatable apple = new Eatable(icon,x+10,y+10);
                     if(apple.checkAvailability() == true)
                         g2d.drawImage(apple.icon,apple.xpos,apple.ypos,this);
                 }
             }
         }
-        
         g2d.drawString("Score: ", 670, 90);
         g2d.drawString(Integer.toString(android.score),670,110); // Player score
         g2d.drawString("Lives: ", 670, 200);
+        g2d.drawImage(android.icon,android.xpos,android.ypos,this);
+        g2d.drawImage(window1.icon,window1.xpos,window1.ypos,this);
+        g2d.drawImage(window2.icon,window2.xpos,window2.ypos,this);
         int position = 630;
         for(int i = 0; i < android.numLives; i++){
             g2d.drawImage(lives, null, position+=30, 220); // num lives
         }
-        drawAndroid(g2d); // main character
-        drawWindows(g2d, window1); //first window
-        drawWindows(g2d, window2); //second window
         g2d.dispose();
     }
     
@@ -151,11 +149,19 @@ public class Board extends JPanel {
      */
     public void loadCharacters(){
         android = new Android();
+        android.xpos = 10;
+        android.ypos = 10;
         window1 = new Windows();
-        window2 = new Windows("Images/rsz_windows.png", 8 , 5);
+        window1.xpos = 100;
+        window1.ypos = 100;
+        
+        window2 = new Windows();
+        window1.xpos = 120;
+        window1.ypos = 100;
+        
         lives = android.icon;
         try{
-            ICON = ImageIO.read(new File("Images/rsz_Apple.png"));
+            icon = ImageIO.read(new File("Images/rsz_Apple.png"));
         }catch(IOException e){
             System.err.print("Error initializing the eatables.");
         }
@@ -169,8 +175,9 @@ public class Board extends JPanel {
     	g2d.drawImage(window.icon,window.xpos,window.ypos,this);
     }
     
-    private void playGame(Graphics g, Windows window) {
-    	drawWindows(g,window);
+    private void drawCharacters(Graphics g) {
+    	drawWindows(g,window1);
+        drawWindows(g,window2);
         drawAndroid(g);
     }
    
@@ -184,5 +191,4 @@ public class Board extends JPanel {
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
-    
 } // end class
