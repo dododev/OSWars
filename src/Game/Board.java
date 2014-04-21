@@ -20,6 +20,7 @@ public class Board extends JPanel {
     
     private BufferedImage ICON;
     private BufferedImage lives;
+    private Image ii;
     
     protected static Android android;
     protected static Windows window1;
@@ -59,8 +60,10 @@ public class Board extends JPanel {
     
     //Constructor
     public Board() {
-        setBackground(Color.BLACK);
         loadCharacters();
+        setFocusable(true);
+        addKeyListener(new TAdapter());
+        setBackground(Color.BLACK);
     }
 
     /**
@@ -70,11 +73,26 @@ public class Board extends JPanel {
      */ 
     @Override
     public void paintComponent(Graphics g) {
-    	g2d = (Graphics2D) g;
+    	super.paintComponent(g);
     	initializeMap(g);
-    	playGame(g);
-        //repaint();
+    	playGame(g,window1);
+        doDrawings(g);
     }
+    
+    private void doDrawings(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.BLACK);
+        initializeMap(g2d);
+        drawAndroid(g2d);
+        drawWindows(g2d,window1);
+        drawWindows(g2d,window2);
+        
+        g2d.drawImage(ii, 5, 5, this);
+        Toolkit.getDefaultToolkit().sync();
+        g2d.dispose();
+    }
+    
+    
     
     /**
      * Draws the level along with the eatables
@@ -151,15 +169,8 @@ public class Board extends JPanel {
     	g2d.drawImage(window.icon,window.xpos,window.ypos,this);
     }
     
-    private void playGame(Graphics g) {
-    	android.moveDown();
-    	android.moveDown();
-    	android.moveRight();
-    	android.moveRight();
-    	android.moveRight();
-    	android.moveRight();
-    	android.moveRight();
-    	android.moveRight();
+    private void playGame(Graphics g, Windows window) {
+    	drawWindows(g,window);
         drawAndroid(g);
     }
    
