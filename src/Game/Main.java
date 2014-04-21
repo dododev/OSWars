@@ -1,7 +1,7 @@
 /**
   * Runnable which begins the game
   * @author Kyle Holcomb & Luis Poza
-  * @version 1.2
+  * @version 1.3
   */
 
 package Game;
@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 
 public class Main extends JFrame {
 
-	public Main() {
+    public Main() {
         add(new Board());
         setTitle("OS WARS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,23 +28,37 @@ public class Main extends JFrame {
         setVisible(true);  
     }
 
+    /**
+     *
+     * @param args
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         SplashScreen splash = new SplashScreen();
         Controller c = new Controller();
         splash.setVisible(true);
-        Thread t = Thread.currentThread();
+        
         playIntroSound();
-        t.sleep(4000); // Keeps the splash on screen for 4 seconds
+        Thread.sleep(4000); // Keeps the splash on screen for 4 seconds
         splash.dispose();
         
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                //JPanel panel = new JPanel();
+                //frame.add(panel);
+
+                //Graphics g = panel.getGraphics();
+                Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
                 new Main();
             }
         });
     }
     
+    /**
+     * Plays an introduction sound for the game 
+     * .wav is the only acceptable format
+     */
     public static void playIntroSound(){
         try{
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sounds/droid.wav").getAbsoluteFile());

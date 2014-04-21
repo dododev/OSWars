@@ -16,6 +16,10 @@ public class PowerUp extends Eatable {
     private void move(){
         if (type == 1)
             this.xpos +=1; // some powerups move randomly around the map
+        if (type == 2){
+            this.xpos = 1;
+            this.ypos = 1;
+        }
     }
     
 }

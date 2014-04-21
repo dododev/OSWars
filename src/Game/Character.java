@@ -10,7 +10,7 @@ package Game;
 import java.awt.image.BufferedImage;
 
 public class Character {
-    public int xpos, ypos, dx, dy;
+    public int xpos,ypos,dx,dy;
     private  String name;
     BufferedImage icon;
     

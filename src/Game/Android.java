@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Android extends Character{
+
     public int score;
     public int numLives = 3;
     
@@ -32,20 +33,46 @@ public class Android extends Character{
         this.ypos = 10;
     }
     
+    /**Getter for numLives
+     * @return numLives
+     */
+    public int getLives(){
+    	return numLives;
+    }
+    
+    
+    /**
+     * If the android died, it decrements the number of lives
+     */
+    public void andriodDied(){
+    	if(numLives > 0){
+    		numLives--;
+    	}
+    }
+    
+    /**
+     *
+     * @param difference the positive change of points
+     */
     public void changeScore(int difference){
         this.score += difference;
     }
     
+    /**
+     *
+     * @return score The players current score
+     */
     public int getScore(){
         return score;
     }
     
-    public void moveUp(){
-        this.ypos += 10;
+    /*MoveUp and Move down are inverted because of how we defined the coordinates, so I changed them*/
+     public void moveUp(){
+        this.ypos -= 10;
     }
     
     public void moveDown(){
-        this.ypos -= 10;
+        this.ypos += 10;
     }
     
     public void moveLeft(){
@@ -55,5 +82,4 @@ public class Android extends Character{
     public void moveRight(){
         this.xpos += 10;
     }
-    
 }

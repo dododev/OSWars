@@ -8,8 +8,17 @@ package Game;
 
 import java.awt.event.KeyEvent;
 
+/**
+ *
+ * @author Kyle
+ */
 public class Controller {
-    public void onKeyPress(KeyEvent ke) {
+
+    /**
+     *
+     * @param ke
+     */
+    public static void onKeyPress(KeyEvent ke) {
         // Arrow keys and WASD keys move the paddle
         int keyCode = ke.getKeyCode();
         switch(keyCode){

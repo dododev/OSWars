@@ -7,6 +7,9 @@
 package Game;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +22,11 @@ public class Board extends JPanel {
     private BufferedImage lives;
     
     protected static Android android;
+    protected static Windows window1;
+    protected static Windows window2;
     protected static Eatable apple;
+    private int reqdx, reqdy, viewdx, viewdy; // ?
+    
     private final Color WALL_COLOR = new Color(164, 199, 57); // Android Green
     private final BasicStroke WALL_THICKNESS = new BasicStroke(5);
     private final int BLOCK_SIZE = 40; //individual tile size
@@ -27,6 +34,11 @@ public class Board extends JPanel {
     private final int TOTAL_SCREEN_SIZE = NUM_BLOCKS * BLOCK_SIZE;
     private Graphics2D g2d;
     
+     /* Corresponding wall locations and eatable
+     * 	     2
+     *   1  16   4
+     *       8 
+     * */
     private final short level1[][] = {
         {19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22},
         {17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20},
@@ -48,6 +60,7 @@ public class Board extends JPanel {
     //Constructor
     public Board() {
         setBackground(Color.BLACK);
+        loadCharacters();
     }
 
     /**
@@ -57,9 +70,10 @@ public class Board extends JPanel {
      */ 
     @Override
     public void paintComponent(Graphics g) {
-        loadCharacters();
-        initializeMap(g);
-        drawAndroid(g);
+    	g2d = (Graphics2D) g;
+    	initializeMap(g);
+    	playGame(g);
+        //repaint();
     }
     
     /**
@@ -101,18 +115,26 @@ public class Board extends JPanel {
         }
         
         g2d.drawString("Score: ", 670, 90);
-        g2d.drawString(Integer.toString(android.score),670,110); // score
+        g2d.drawString(Integer.toString(android.score),670,110); // Player score
         g2d.drawString("Lives: ", 670, 200);
         int position = 630;
         for(int i = 0; i < android.numLives; i++){
             g2d.drawImage(lives, null, position+=30, 220); // num lives
         }
-        g2d.drawImage(android.icon,android.xpos,android.ypos,this); // main character
+        drawAndroid(g2d); // main character
+        drawWindows(g2d, window1); //first window
+        drawWindows(g2d, window2); //second window
         g2d.dispose();
     }
     
+    /** 
+     * We will have to change the way we load our images if we want to put 
+     * this game in a .JAR
+     */
     public void loadCharacters(){
         android = new Android();
+        window1 = new Windows();
+        window2 = new Windows("Images/rsz_windows.png", 8 , 5);
         lives = android.icon;
         try{
             ICON = ImageIO.read(new File("Images/rsz_Apple.png"));
@@ -123,6 +145,33 @@ public class Board extends JPanel {
     
     public void drawAndroid(Graphics g){
         g2d.drawImage(android.icon,android.xpos,android.ypos,this);
+    }
+    
+    public void drawWindows(Graphics g, Windows window){
+    	g2d.drawImage(window.icon,window.xpos,window.ypos,this);
+    }
+    
+    private void playGame(Graphics g) {
+    	android.moveDown();
+    	android.moveDown();
+    	android.moveRight();
+    	android.moveRight();
+    	android.moveRight();
+    	android.moveRight();
+    	android.moveRight();
+    	android.moveRight();
+        drawAndroid(g);
+    }
+   
+    class TAdapter extends KeyAdapter {
+	@Override
+        public void keyPressed(KeyEvent ke) {
+            Controller.onKeyPress(ke);
+        }
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+        repaint();
     }
     
 } // end class

@@ -3,18 +3,20 @@
  * @author Kyle Holcomb & Luis Poza
  * @version 1.2
  */
+
 package Game;
  
 import java.io.File;
 import javax.swing.*;
- 
+
 public class SplashScreen extends JFrame {
  
     private JLabel imglabel;
     private ImageIcon img;
-    private static JProgressBar pbar;
-    Thread t = null;
  
+    /**
+     *
+     */
     public SplashScreen() {
         super("OS Wars");
         setSize(284, 177);
