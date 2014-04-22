@@ -1,7 +1,7 @@
 /**
   * Board creation
   * @author Kyle Holcomb & Luis Poza
-  * @version 1.3
+  * @version 1.4
   */
 
 package Game;
@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
+    
     //Icons
     private BufferedImage icon;
     private BufferedImage lives;
@@ -185,10 +186,7 @@ public class Board extends JPanel {
 	@Override
         public void keyPressed(KeyEvent ke) {
             Controller.onKeyPress(ke);
+            repaint();
         }
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-        repaint();
     }
 } // end class

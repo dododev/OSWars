@@ -29,7 +29,6 @@ public class Main extends JFrame {
     }
 
     /**
-     *
      * @param args
      * @throws InterruptedException
      */
@@ -45,10 +44,6 @@ public class Main extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                //JPanel panel = new JPanel();
-                //frame.add(panel);
-
-                //Graphics g = panel.getGraphics();
                 Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
                 new Main();
             }
