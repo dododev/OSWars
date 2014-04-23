@@ -34,7 +34,7 @@ public class Main extends JFrame {
      */
     public static void main(String[] args) throws InterruptedException {
         SplashScreen splash = new SplashScreen();
-        Controller c = new Controller();
+        //Controller c = new Controller();
         splash.setVisible(true);
         
         playIntroSound();
@@ -44,7 +44,6 @@ public class Main extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
                 new Main();
             }
         });

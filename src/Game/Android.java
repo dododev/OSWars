@@ -67,18 +67,18 @@ public class Android extends Character{
     
     /*MoveUp and Move down are inverted because of how we defined the coordinates, so I changed them*/
      public void moveUp(){
-        this.ypos -= 10;
+        this.ypos -= 40;
     }
     
     public void moveDown(){
-        this.ypos += 10;
+        this.ypos += 40;
     }
     
     public void moveLeft(){
-        this.xpos -= 10;
+        this.xpos -= 40;
     }
     
     public void moveRight(){
-        this.xpos += 10;
+        this.xpos += 40;
     }
 }

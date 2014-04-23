@@ -7,16 +7,22 @@
 package Game;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
+    
+    private boolean keepPlaying = true;
     
     //Icons
     private BufferedImage icon;
@@ -30,6 +36,7 @@ public class Board extends JPanel {
     protected static Android android;
     protected static Windows window1;
     protected static Windows window2;
+    protected static Windows window3;
     protected static Eatable apple;
     
     //GameBoard Properties
@@ -45,6 +52,7 @@ public class Board extends JPanel {
       *   1  16   4
       *       8 
       */
+    
     private final short level1[][] = {
         {19, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 22},
         {17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20},
@@ -63,6 +71,29 @@ public class Board extends JPanel {
         {25, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 28}
     };
     
+    /*
+        1  2  3
+        4 (5) 6
+        7  8  9
+    */
+    private final short level2[][] = {
+        {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 4, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 4, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 4, 5, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6},
+        {7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9},
+    };
+    
     //Constructor
     public Board() {
         loadCharacters();
@@ -78,16 +109,32 @@ public class Board extends JPanel {
      */ 
     @Override
     public void paintComponent(Graphics g) {
-    	super.paintComponent(g);
-    	initializeMap(g);
-    	drawCharacters(g);
-        doDrawings(g);
+    	if(keepPlaying){
+            super.paintComponent(g);
+            initializeMap(g);
+            drawCharacters(g);
+            doDrawings(g);
+        }else{
+            try {
+                EndGame endScreen = new EndGame();
+                playLoserSound();
+                Thread.sleep(5000);
+                endScreen.dispose();
+                //reset for new game
+                //keepPlaying = true;
+            } catch (InterruptedException ex) {
+                ex.getMessage();
+            }
+        }
     }
     
     private void doDrawings(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLACK);
         initializeMap(g2d);
+        window1.moveRandomly();
+        window2.moveRandomly();
+        window3.moveRandomly();
         drawCharacters(g2d);
         g2d.drawImage(ii, 5, 5, this);
         Toolkit.getDefaultToolkit().sync();
@@ -149,18 +196,22 @@ public class Board extends JPanel {
      * this game in a .JAR
      */
     public void loadCharacters(){
+        window1 = new Windows();
+        window1.xpos = 270;
+        window1.ypos = 200;
+        //----------------------
+        window2 = new Windows();
+        window2.xpos = 250;
+        window2.ypos = 200;
+        //----------------------
+        window3 = new Windows();
+        window3.xpos = 150;
+        window3.ypos = 100;
+        //----------------------
         android = new Android();
         android.xpos = 10;
         android.ypos = 10;
-        window1 = new Windows();
-        window1.xpos = 100;
-        window1.ypos = 100;
-        
-        window2 = new Windows();
-        window1.xpos = 120;
-        window1.ypos = 100;
-        
-        lives = android.icon;
+        lives = android.icon; //num lives display
         try{
             icon = ImageIO.read(new File("Images/rsz_Apple.png"));
         }catch(IOException e){
@@ -179,6 +230,7 @@ public class Board extends JPanel {
     private void drawCharacters(Graphics g) {
     	drawWindows(g,window1);
         drawWindows(g,window2);
+        drawWindows(g,window3);
         drawAndroid(g);
     }
    
@@ -187,6 +239,21 @@ public class Board extends JPanel {
         public void keyPressed(KeyEvent ke) {
             Controller.onKeyPress(ke);
             repaint();
+        }
+    }
+    
+    public void checkCollisions(){
+        //
+    }
+  
+    public static void playLoserSound(){
+        try{
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sounds/lose.wav").getAbsoluteFile());
+            Clip SOUNDBYTE = AudioSystem.getClip();
+            SOUNDBYTE.open(ais);
+            SOUNDBYTE.start();
+        }catch(UnsupportedAudioFileException | IOException | LineUnavailableException ex){
+            System.out.println("Error playing intro sound.");
         }
     }
 } // end class

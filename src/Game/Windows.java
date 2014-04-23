@@ -14,19 +14,16 @@ public class Windows extends Character {
 	private boolean IS_ALIVE;
 	private boolean IS_KILLABLE;
 	
-	/**
-	 * 
-	 */
 	public Windows() {
-		this("Images/rsz_windows.png", 7 , 5);
+		this("Images/rsz_windows.png", 100 , 100);
 	}
 	
 	public Windows(String imageLocation, int xCoordinate, int yCoordinate){
-		super();
-        setImage(imageLocation);
-        setInitialPosition(xCoordinate , yCoordinate);
-        IS_ALIVE = true;
-        IS_KILLABLE = false;
+            super();
+            setImage(imageLocation);
+            setInitialPosition(xCoordinate , yCoordinate);
+            IS_ALIVE = true;
+            IS_KILLABLE = false;
 	}
 	
     private void setImage(String imageLocation){
@@ -38,24 +35,24 @@ public class Windows extends Character {
     }
     
     private void setInitialPosition(int xCoordinate, int yCoordinate){
-        this.xpos = xCoordinate*40;
-        this.ypos = yCoordinate*40;
+        this.xpos = xCoordinate * 40;
+        this.ypos = yCoordinate * 40;
     }
 
     public void moveUp(){
-        this.ypos += 10;
+        this.ypos += 40;
     }
     
     public void moveDown(){
-        this.ypos -= 10;
+        this.ypos -= 40;
     }
     
     public void moveLeft(){
-        this.xpos -= 10;
+        this.xpos -= 40;
     }
     
     public void moveRight(){
-        this.xpos += 10;
+        this.xpos += 40;
     }
     
     /** 
@@ -63,7 +60,7 @@ public class Windows extends Character {
      * 
      */
     public void moveRandomly(){
-    	Random rand = new Random(); // Will generate a random int between 1 and 4
+    	Random rand = new Random(); // Will generate a random int between 10 and 20
     	int randint = rand.nextInt(4) + 1;
     	/*
     	 * Corresponding Directions
